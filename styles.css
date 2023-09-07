@@ -1,0 +1,25 @@
+#container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 100px;
+    height: 100vh;
+    width: 100vw;
+
+}
+
+
+#container-grid{
+    display: grid;
+    width: 400px;
+    height: 400px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+}
+
+.grid-element { 
+    border: 1px solid black;
+    background-color: white;
+    user-select: none;
+
+}
