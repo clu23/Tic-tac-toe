@@ -21,6 +21,12 @@ const Gameboard=(()=>{
     let _board=new Array(9);
     const getField = (num) => _board[num];
 
+    const setField = (num, player) => {
+        const htmlField = document.querySelector(`.board button:nth-child(${num + 1}) p`);
+        htmlField.textContent = player.getSign();
+        _board[num] = player.getSign();
+    }
+
     const clear = () => {
         for (let i = 0; i < _board.length; i++) {
             _board[i] = undefined;
@@ -30,13 +36,25 @@ const Gameboard=(()=>{
     
     return{
         getField,
+        setField,
         clear
     };
 })();
 
+/**
+ * This factoring function is used to create the Player objects 
+ */
 
-const Player=(name,score) =>{
+
+const Player=(name,sign) =>{
+    let name=_name;
+    let _sign=sign;
     const displayScore=() => console.log(`The score of ${name} is ${score}`);
+    const getSign=()=>_sign;
+    return{
+        displayScore,
+        getSign
+    };
 }
 
 
