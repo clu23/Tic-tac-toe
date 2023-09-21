@@ -33,8 +33,20 @@ const Gameboard=(()=>{
         }
     }
 
+    const getEmptyFieldsIdx = () => {
+        let fields = [];
+        for (let i = 0; i < _board.length; i++) {
+            const field = _board[i];
+            if (field == undefined) {
+                fields.push(i);
+            }
+        }
+        return fields;
+    }
+
     
     return{
+        getEmptyFieldsIdx,
         getField,
         setField,
         clear
@@ -47,15 +59,39 @@ const Gameboard=(()=>{
 
 
 const Player=(name,sign) =>{
-    let name=_name;
+    let _name=name;
     let _sign=sign;
-    const displayScore=() => console.log(`The score of ${name} is ${score}`);
     const getSign=()=>_sign;
+    const setSign=(sign,active)=>{
+        _sign=sign;
+        const p=document.querySelector(`.btn-p.${sign.toLowerCase()}`);
+        if (active){
+            p.classList.add('selected');
+            p.classList.remove('unselected');
+        }
+        else{
+            p.classList.remove('selected');
+            p.classList.add('unselected');
+        }
+    }
+    const getName=()=>_name;
     return{
         displayScore,
-        getSign
+        setSign,
+        getSign,
+        getName
     };
 }
+
+/**
+ * This module is used to control the game
+ */
+
+const gameController = (() => {
+    const _humanPlayer = Player('X');
+    const _aiPlayer = Player('O');
+
+})();
 
 
 

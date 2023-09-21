@@ -33,3 +33,9 @@
 .field:hover{
     background-color: rgb(88, 84, 84);
 }
+
+.btn-p {
+    width: 15em;
+    height: 2.5em;
+    margin: 1em 1em 1em 1em;
+}
