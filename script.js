@@ -91,6 +91,67 @@ const gameController = (() => {
     const _humanPlayer = Player('X');
     const _aiPlayer = Player('O');
 
+    const getHumanPlayer = () => _humanPlayer;
+    const getAiPlayer = () => _aiPlayer;
+
+    const _sleep = (ms) => {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    const _checkForRows = (board) => {
+        for (let i = 0; i < 3; i++) {
+            let row = [];
+            for (let j = i * 3; j < (i+1) * 3; j++) {
+                row.push(board.getField(j));
+            }
+
+            if (row.every(field => field == 'X') || row.every(field => field == 'O')) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    const _checkForColumns= (board) =>{
+        for (let i=0; i<3; i++) {
+            let column=[];
+            for (let j=0;j<3;j++){
+                column.push(board.getField(j*3+i));
+            }
+
+            if (column.every(field => field == 'X') || column.every(field => field == 'O')) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    const _checkForDiagonals= (board) =>{
+        diagonal1=[board.getField(0), board.getField(4), board.getField(8)];
+        diagonal2=[board.getField(2), board.getField(4), board.getField(6)];
+
+        if (diagonal1.every(field => field == 'X') || diagonal1.every(field => field == 'O')) {
+            return true;
+        }
+        else if (diagonal2.every(field => field == 'X') || diagonal2.every(field => field == 'O')){
+            return true;
+        }
+
+        else{
+            return false;
+        }
+    }
+
+
+    const checkForWin=(board)=>{
+        if (_checkForRows(board) || _checkForColumns(board) || _checkForDiagonals(board)) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
 })();
 
 
