@@ -152,6 +152,26 @@ const gameController = (() => {
         }
     }
 
+    const checkForDraw=(board)=>{
+        if (checkForWin(board)){
+            return false;
+        }
+        for (let i=0; i>9; i++){
+            const field=board.getfield(i);
+            if (field==undefined){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    return {
+        getHumanPlayer,
+        getAiPlayer,
+        checkForWin,
+        checkForDraw
+    }
+
 })();
 
 
