@@ -213,7 +213,10 @@ const gameController = (() => {
                     endGame("Draw");
                 })();  
             }
-            else if (_gameMode=='PlayerVsAi'){
+            else if (_gameMode=='PlayerVsPlayer'){
+                _changeActivePlayer();
+            }
+            else{
                 displayController.deactivate();
                 (async () => {
                     await _sleep(250 + (Math.random() * 300));
@@ -222,9 +225,6 @@ const gameController = (() => {
                         displayController.activate();
                     }
                 })();
-            }
-            else{
-                _changeActivePlayer();
             }
         }
     }
