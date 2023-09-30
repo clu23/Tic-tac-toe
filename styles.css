@@ -8,6 +8,10 @@
 
 }
 
+.hide{
+    display: none;
+}
+
 
 #container-grid{
     display: grid;

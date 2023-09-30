@@ -17,6 +17,11 @@ let cells = document.querySelectorAll('.grid-element');
  * This module stores the game board information
  */
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+
 const Gameboard=(()=>{
     let _board=new Array(9);
     const getField = (num) => _board[num];
@@ -76,7 +81,6 @@ const Player=(name,sign) =>{
     }
     const getName=()=>_name;
     return{
-        displayScore,
         setSign,
         getSign,
         getName
@@ -165,12 +169,91 @@ const gameController = (() => {
         return true;
     }
 
+    const changeSign=(sign)=>{
+        if (sign=='X'){
+            _humanPlayer.setSign('X', true);
+            _aiPlayer.setSign('O');
+        }
+        else if (sign=='O'){
+            _humanPlayer.setSign('O', true);
+            _aiPlayer.setSign('X');
+        }
+        else throw 'Incorrect sign entered';
+    }
+
+    /**
+     * Steps the player to the field, and checks if the game has come to an end.
+     * If the game is finished it disables the buttons.
+     * @param {int} num - the index of the field which the player clicked
+     */
+
+    const playerStep=(num)=>{
+        const field=Gameboard.getField(num);
+        if (field==undefined){
+            Gameboard.setField(num,_humanPlayer);
+            if (checkForWin(Gameboard)){
+                (async() =>{
+                    await _sleep(500 + (Math.random() * 500));
+                    endGame(_humanPlayer.getSign());
+                })();
+            }
+            else if (checkForDraw(Gameboard)) {
+                (async () => {
+                    await _sleep(500 + (Math.random() * 500));
+                    endGame("Draw");
+                })();  
+            }
+            else{
+                displayController.deactivate();
+                (async () => {
+                    await _sleep(250 + (Math.random() * 300));
+                    aiStep();
+                    if (!checkForWin(gameBoard)) {
+                        displayController.activate();
+                    }
+                })();
+            }
+        }
+    }
+
+    const endGame =(sign)=>{
+        const winElements = document.querySelectorAll('.win p');
+
+        if (sign=='Draw'){
+            winElements[3].classList.remove('hide');
+            console.log('It is a draw');
+        }
+
+        else{
+            console.log(`The winner is player ${sign}`);
+            winElements[0].classList.remove('hide');
+            if (sign.toLowerCase()=='x'){
+                winElements[1].classList.remove('hide');
+            }
+            else{
+                winElements[2].classList.remove('hide');
+            }
+        }
+        console.log('deactivate');
+        displayController.deactivate();
+        displayController.makeBodyRestart();
+    }
+
+    
     return {
         getHumanPlayer,
         getAiPlayer,
         checkForWin,
-        checkForDraw
+        checkForDraw,
+        changeSign,
+        playerStep,
+        endGame
     }
+
+})();
+
+const displayController = (() => {
+
 
 })();
 

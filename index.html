@@ -11,10 +11,20 @@
     <link type="text/css" rel="stylesheet" href="styles.css">
   </head>
   <body>
+    <div class="win">
+      <p class="winner hide">The Winner is</p>
+      <p class="x-text sign hide">X</p>
+      <p class="o-text sign hide">O</p>
+      <p class="winner draw hide">It's a Draw</p>
+    </div>
     <div id="container">
+      <div class="game-mode">
+        <button class="btn btn-p x">Player vs Player</button>
+        <button class="btn btn-p o">Player vs AI</button>
+      </div>
       <div class="item player">
-        <button class="btn btn-p x">X</button>
-        <button class="btn btn-p o">O</button>
+        <button class="btn btn-p hide x">X</button>
+        <button class="btn btn-p hide o">O</button>
       </div>
       <div id="container-grid">
         <button class="field"><p></p></button>
