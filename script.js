@@ -254,6 +254,9 @@ const gameController = (() => {
 
 const displayController = (() => {
 
+    const _init = (() => {
+        
+    })();
 
 })();
 
