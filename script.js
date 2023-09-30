@@ -27,7 +27,8 @@ const Gameboard=(()=>{
     const getField = (num) => _board[num];
 
     const setField = (num, player) => {
-        const htmlField = document.querySelector(`.board button:nth-child(${num + 1}) p`);
+        const htmlField = document.querySelector(`#container-grid button:nth-child(${num + 1}) p`);
+        //htmlField.classList.add('puff-in-center');
         htmlField.textContent = player.getSign();
         _board[num] = player.getSign();
     }
@@ -63,10 +64,9 @@ const Gameboard=(()=>{
  */
 
 
-const Player=(name,sign) =>{
-    let _name=name;
+const Player=(sign) =>{
     let _sign=sign;
-    const getSign=()=>_sign;
+    const getSign = () => _sign;
     const setSign=(sign,active)=>{
         _sign=sign;
         const p=document.querySelector(`.btn-p.${sign.toLowerCase()}`);
@@ -79,11 +79,9 @@ const Player=(name,sign) =>{
             p.classList.add('unselected');
         }
     }
-    const getName=()=>_name;
     return{
         setSign,
-        getSign,
-        getName
+        getSign
     };
 }
 
@@ -95,9 +93,20 @@ const gameController = (() => {
     const _gameMode='PlayerVsPlayer'
     const _humanPlayer = Player('X');
     const _secondPlayer = Player('O');
+    let _activePlayer=_humanPlayer;
 
     const getHumanPlayer = () => _humanPlayer;
     const getSecondPlayer = () => _secondPlayer;
+    const getActivePlayer= () => _activePlayer;
+
+    const _changeActivePlayer = () => {
+        if (_activePlayer==_humanPlayer){
+            _activePlayer=_secondPlayer;
+        }
+        else{
+            _activePlayer=_humanPlayer
+        }
+    }
 
     const _sleep = (ms) => {
         return new Promise(resolve => setTimeout(resolve, ms));
@@ -161,8 +170,8 @@ const gameController = (() => {
         if (checkForWin(board)){
             return false;
         }
-        for (let i=0; i>9; i++){
-            const field=board.getfield(i);
+        for (let i=0; i<9; i++){
+            const field=board.getField(i);
             if (field==undefined){
                 return false;
             }
@@ -188,14 +197,14 @@ const gameController = (() => {
      * @param {int} num - the index of the field which the player clicked
      */
 
-    const playerStep=(num,player)=>{
+    const playerStep=(num)=>{
         const field=Gameboard.getField(num);
         if (field==undefined){
-            Gameboard.setField(num,player);
+            Gameboard.setField(num,_activePlayer);
             if (checkForWin(Gameboard)){
                 (async() =>{
                     await _sleep(500 + (Math.random() * 500));
-                    endGame(player.getSign());
+                    endGame(_activePlayer.getSign());
                 })();
             }
             else if (checkForDraw(Gameboard)) {
@@ -204,7 +213,7 @@ const gameController = (() => {
                     endGame("Draw");
                 })();  
             }
-            else{
+            else if (_gameMode=='PlayerVsAi'){
                 displayController.deactivate();
                 (async () => {
                     await _sleep(250 + (Math.random() * 300));
@@ -213,6 +222,9 @@ const gameController = (() => {
                         displayController.activate();
                     }
                 })();
+            }
+            else{
+                _changeActivePlayer();
             }
         }
     }
@@ -237,13 +249,14 @@ const gameController = (() => {
         }
         console.log('deactivate');
         displayController.deactivate();
-        displayController.makeBodyRestart();
+        //displayController.makeBodyRestart();
     }
 
     
     return {
         getHumanPlayer,
         getSecondPlayer,
+        getActivePlayer,
         checkForWin,
         checkForDraw,
         changeSign,
@@ -254,11 +267,56 @@ const gameController = (() => {
 })();
 
 const displayController = (() => {
+    const htmlBoard = Array.from(document.querySelectorAll('button.field'));
+    const restart = document.querySelector('.restart');
+    const x = document.querySelector('.x');
+    const o = document.querySelector('.o');
+
+    const _changePlayerSign = (sign) => {
+        gameController.changeSign(sign);
+    }
+
+    const clear = () => {
+        htmlBoard.forEach(field => {
+            const p = field.childNodes[0];
+            p.classList = [];
+            p.textContent = '';
+        });
+    }
+
+    const deactivate = () => {
+        htmlBoard.forEach(field => {
+            field.setAttribute('disabled', '');
+        });
+    }
+
+    const activate = () => {
+        htmlBoard.forEach(field => {
+
+            field.removeAttribute('disabled');
+        });
+    }
 
     
     const _init = (() => {
+        for (let i = 0; i < htmlBoard.length; i++) {
+            field = htmlBoard[i];
+            field.addEventListener('click', gameController.playerStep.bind(field, i));
+        }
+
+        //restart.addEventListener('click', gameController.restart);
+
+        x.addEventListener('click', _changePlayerSign.bind(this, 'X'));
+
+        o.addEventListener('click', _changePlayerSign.bind(this, 'O'));
         
     })();
+
+    return {
+        deactivate,
+        activate,
+        clear
+    }
 
 })();
 
