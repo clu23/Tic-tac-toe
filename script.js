@@ -94,10 +94,10 @@ const Player=(name,sign) =>{
 const gameController = (() => {
     const _gameMode='PlayerVsPlayer'
     const _humanPlayer = Player('X');
-    const _Player2 = Player('O');
+    const _secondPlayer = Player('O');
 
     const getHumanPlayer = () => _humanPlayer;
-    const getPlayer2 = () => _Player2;
+    const getSecondPlayer = () => _secondPlayer;
 
     const _sleep = (ms) => {
         return new Promise(resolve => setTimeout(resolve, ms));
@@ -173,11 +173,11 @@ const gameController = (() => {
     const changeSign=(sign)=>{
         if (sign=='X'){
             _humanPlayer.setSign('X', true);
-            _Player2.setSign('O');
+            _secondPlayer.setSign('O');
         }
         else if (sign=='O'){
             _humanPlayer.setSign('O', true);
-            _Player2.setSign('X');
+            _secondPlayer.setSign('X');
         }
         else throw 'Incorrect sign entered';
     }
@@ -188,14 +188,14 @@ const gameController = (() => {
      * @param {int} num - the index of the field which the player clicked
      */
 
-    const playerStep=(num)=>{
+    const playerStep=(num,player)=>{
         const field=Gameboard.getField(num);
         if (field==undefined){
-            Gameboard.setField(num,_humanPlayer);
+            Gameboard.setField(num,player);
             if (checkForWin(Gameboard)){
                 (async() =>{
                     await _sleep(500 + (Math.random() * 500));
-                    endGame(_humanPlayer.getSign());
+                    endGame(player.getSign());
                 })();
             }
             else if (checkForDraw(Gameboard)) {
@@ -208,8 +208,8 @@ const gameController = (() => {
                 displayController.deactivate();
                 (async () => {
                     await _sleep(250 + (Math.random() * 300));
-                    aiStep();
-                    if (!checkForWin(gameBoard)) {
+                    //aiStep();
+                    if (!checkForWin(Gameboard)) {
                         displayController.activate();
                     }
                 })();
@@ -243,7 +243,7 @@ const gameController = (() => {
     
     return {
         getHumanPlayer,
-        getAiPlayer,
+        getSecondPlayer,
         checkForWin,
         checkForDraw,
         changeSign,
