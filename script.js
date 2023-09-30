@@ -92,11 +92,12 @@ const Player=(name,sign) =>{
  */
 
 const gameController = (() => {
+    const _gameMode='PlayerVsPlayer'
     const _humanPlayer = Player('X');
-    const _aiPlayer = Player('O');
+    const _Player2 = Player('O');
 
     const getHumanPlayer = () => _humanPlayer;
-    const getAiPlayer = () => _aiPlayer;
+    const getPlayer2 = () => _Player2;
 
     const _sleep = (ms) => {
         return new Promise(resolve => setTimeout(resolve, ms));
@@ -172,11 +173,11 @@ const gameController = (() => {
     const changeSign=(sign)=>{
         if (sign=='X'){
             _humanPlayer.setSign('X', true);
-            _aiPlayer.setSign('O');
+            _Player2.setSign('O');
         }
         else if (sign=='O'){
             _humanPlayer.setSign('O', true);
-            _aiPlayer.setSign('X');
+            _Player2.setSign('X');
         }
         else throw 'Incorrect sign entered';
     }
@@ -254,6 +255,7 @@ const gameController = (() => {
 
 const displayController = (() => {
 
+    
     const _init = (() => {
         
     })();
