@@ -28,14 +28,16 @@
     border: 1px solid black;
     background-color: white;
     box-sizing: content-box;
+    font-size: 48px;
+    font-weight: bold;
     width: 100%;
     height: 100%;
     user-select: none;
 
 }
 
-.field:hover{
-    background-color: rgb(88, 84, 84);
+.field p {
+    margin: 0px;
 }
 
 .btn-p {
@@ -43,3 +45,9 @@
     height: 2.5em;
     margin: 1em 1em 1em 1em;
 }
+
+.playing {
+    transform: scale(1.1);
+    color: #0e5669;
+    box-shadow: 0 0 1rem #0e5669;
+  }

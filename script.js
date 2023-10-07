@@ -28,7 +28,7 @@ const Gameboard=(()=>{
 
     const setField = (num, player) => {
         const htmlField = document.querySelector(`#container-grid button:nth-child(${num + 1}) p`);
-        //htmlField.classList.add('puff-in-center');
+        htmlField.classList.add('puff-in-center');
         htmlField.textContent = player.getSign();
         _board[num] = player.getSign();
     }
