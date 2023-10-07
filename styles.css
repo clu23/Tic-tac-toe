@@ -46,8 +46,28 @@
     margin: 1em 1em 1em 1em;
 }
 
-.playing {
-    transform: scale(1.1);
-    color: #0e5669;
-    box-shadow: 0 0 1rem #0e5669;
-  }
+.win p {
+    font-weight: 600;
+    color: black;
+    z-index: 1;
+    /*-webkit-animation: focus-in-expand 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: focus-in-expand 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;*/
+}
+
+.winner {
+    position: fixed;
+    left: 50%;
+    top: 25%;
+    transform: translate(-50%, 0);
+    font-size: 35px;
+}
+
+
+.sign {
+    position: fixed;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, 0);
+    font-size: 100px;
+    margin: 0;
+}
