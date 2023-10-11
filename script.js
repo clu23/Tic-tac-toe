@@ -217,6 +217,14 @@ const gameController = (() => {
     }
 
     const endGame =(sign)=>{
+
+        const card = document.querySelectorAll('#container, .header');
+
+        card.forEach(item => {
+            item.classList.remove('unblur');
+            item.classList.add('blur');
+          });
+
         const winElements = document.querySelectorAll('.win p');
 
         if (sign=='Draw'){
@@ -239,6 +247,35 @@ const gameController = (() => {
         //displayController.makeBodyRestart();
     }
 
+    const restart = async function () {
+
+        const card = document.querySelectorAll('#container, .header');
+        const winElements = document.querySelectorAll('.win p');
+
+        card.forEach(item =>{
+            item.classList.add('unblur');
+        });
+        
+        Gameboard.clear();
+        displayController.clear();
+        if (_humanPlayer.getSign() == 'O') {
+            //aiStep();
+        }
+        console.log('restart');
+        //console.log(minimaxAiLogic.getAiPercentage());
+        displayController.activate();
+
+        card.forEach(item =>{
+            item.classList.remove('blur');
+        });
+      
+        winElements.forEach(element => {
+            element.classList.add('hide');
+        });
+        document.body.removeEventListener('click', gameController.restart);
+
+    }
+
     
     return {
         getHumanPlayer,
@@ -248,7 +285,8 @@ const gameController = (() => {
         checkForDraw,
         changeSign,
         playerStep,
-        endGame
+        endGame,
+        restart
     }
 
 })();
@@ -283,7 +321,12 @@ const displayController = (() => {
             field.removeAttribute('disabled');
         });
     }
-
+    
+    const makeBodyRestart = () =>{
+        const body = document.querySelector('body');
+        body.addEventListener('click', gameController.restart);
+        
+    }
     
     const _init = (() => {
         for (let i = 0; i < htmlBoard.length; i++) {
@@ -291,7 +334,7 @@ const displayController = (() => {
             field.addEventListener('click', gameController.playerStep.bind(field, i));
         }
 
-        //restart.addEventListener('click', gameController.restart);
+        restart.addEventListener('click', gameController.restart);
 
         x.addEventListener('click', _changePlayerSign.bind(this, 'X'));
 
@@ -302,7 +345,8 @@ const displayController = (() => {
     return {
         deactivate,
         activate,
-        clear
+        clear,
+        makeBodyRestart
     }
 
 })();
