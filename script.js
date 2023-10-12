@@ -270,6 +270,7 @@ const gameController = (() => {
 
         const card = document.querySelectorAll('#container, .header');
         const winElements = document.querySelectorAll('.win p');
+        const buttons=document.querySelectorAll('.item-player')
 
         card.forEach(item =>{
             item.classList.add('unblur');
@@ -291,6 +292,10 @@ const gameController = (() => {
         winElements.forEach(element => {
             element.classList.add('hide');
         });
+
+        buttons.forEach(button=>{
+            button.classList.remove('hide');
+        })
         document.body.removeEventListener('click', gameController.restart);
 
     }
