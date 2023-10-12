@@ -182,11 +182,14 @@ const gameController = (() => {
     }
 
     const changeGameMode=(mode)=>{
+        const gameModeSection=document.querySelector('game-mode')
         if (mode=='PlayerVsPlayer'){
             _gameMode=mode;
+            gameModeSection.classList.add('hide');
         }
         else if (mode=='PlayerVsAi'){
             _gameMode=mode;
+            gameModeSection.classList.add('hide');
         }
         else throw 'Incorrect mode entered';
     }
