@@ -77,7 +77,7 @@ const Player=(sign) =>{
  */
 
 const gameController = (() => {
-    const _gameMode='PlayerVsPlayer'
+    let _gameMode='PlayerVsPlayer'
     const _humanPlayer = Player('X');
     const _secondPlayer = Player('O');
     let _activePlayer=_humanPlayer;
@@ -179,6 +179,16 @@ const gameController = (() => {
             buttons.classList.add('hide');
         }
         else throw 'Incorrect sign entered';
+    }
+
+    const changeGameMode=(mode)=>{
+        if (mode=='PlayerVsPlayer'){
+            _gameMode=mode;
+        }
+        else if (mode=='PlayerVsAi'){
+            _gameMode=mode;
+        }
+        else throw 'Incorrect mode entered';
     }
 
     /**
@@ -308,6 +318,7 @@ const gameController = (() => {
         checkForWin,
         checkForDraw,
         changeSign,
+        changeGameMode,
         playerStep,
         endGame,
         aiStep,
