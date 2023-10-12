@@ -167,13 +167,16 @@ const gameController = (() => {
     }
 
     const changeSign=(sign)=>{
+        const buttons=document.querySelector('.item-player');
         if (sign=='X'){
             _humanPlayer.setSign('X', true);
             _secondPlayer.setSign('O');
+            buttons.classList.add('hide');
         }
         else if (sign=='O'){
             _humanPlayer.setSign('O', true);
             _secondPlayer.setSign('X');
+            buttons.classList.add('hide');
         }
         else throw 'Incorrect sign entered';
     }
@@ -207,7 +210,7 @@ const gameController = (() => {
                 displayController.deactivate();
                 (async () => {
                     await _sleep(250 + (Math.random() * 300));
-                    //aiStep();
+                    aiStep();
                     if (!checkForWin(Gameboard)) {
                         displayController.activate();
                     }
@@ -245,6 +248,22 @@ const gameController = (() => {
         console.log('deactivate');
         displayController.deactivate();
         //displayController.makeBodyRestart();
+    }
+
+    const aiStep=() =>{
+
+        if (checkForWin(Gameboard)) {
+            (async () => {
+                await _sleep(500 + (Math.random() * 500));
+                endGame(_secondPlayer.getSign())
+            })();   
+        }
+        else if (checkForDraw(Gameboard)) {
+            (async () => {
+                await _sleep(500 + (Math.random() * 500));
+                endGame("Draw");
+            })();  
+        }
     }
 
     const restart = async function () {
@@ -286,6 +305,7 @@ const gameController = (() => {
         changeSign,
         playerStep,
         endGame,
+        aiStep,
         restart
     }
 
