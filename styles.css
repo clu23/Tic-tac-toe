@@ -13,7 +13,7 @@
 .hide{
     display: none;
     height: 0px;
-    width:0px;
+    width: 0px;
 }
 
 .header {
@@ -53,7 +53,7 @@
     align-items: center;
 }
 
-.game-mode p{
+p.game-mode{
     font-size: 18px;
     font-family: 'Varela Round', sans-serif;
     font-weight: 200;
