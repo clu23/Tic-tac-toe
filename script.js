@@ -437,7 +437,7 @@ const gameController = (() => {
         }
         console.log('restart');
         //console.log(minimaxAiLogic.getAiPercentage());
-        displayController.activate();
+        displayController.deactivate();
 
         card.forEach(item =>{
             item.classList.remove('blur');
@@ -487,6 +487,7 @@ const displayController = (() => {
     const _changePlayerSign = (sign) => {
         gameController.changeSign(sign);
         document.querySelector('.item-player').classList.add('hide');
+        displayController.activate();
     }
 
     const _changeGameMode=(mode)=>{
@@ -543,6 +544,8 @@ const displayController = (() => {
         x.addEventListener('click', _changePlayerSign.bind(this, 'X'));
 
         o.addEventListener('click', _changePlayerSign.bind(this, 'O'));
+
+        
         
     })();
 
@@ -555,5 +558,4 @@ const displayController = (() => {
 
 })();
 
-
-
+displayController.deactivate();

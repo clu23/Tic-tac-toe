@@ -126,5 +126,18 @@ p.game-mode{
 
 
 .btn.restart{
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    width: 10em;
+    height: 2.5em;
+    background-color: #3882F6;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    border-radius: 10px;
+    border: none;
+}
+
+.btn.restart:hover{
+    cursor: pointer;
+    -webkit-transform: scale(1.07);
 }
