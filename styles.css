@@ -80,9 +80,20 @@ p.game-mode{
 }
 
 .btn-p {
-    width: 15em;
+    width: 12em;
     height: 2.5em;
     margin: 1em 1em 1em 1em;
+    background-color: #3882F6;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    border-radius: 10px;
+    border: none;
+}
+
+.btn-p:hover{
+    cursor: pointer;
+    -webkit-transform: scale(1.07);
 }
 
 
