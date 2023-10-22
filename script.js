@@ -26,6 +26,13 @@ const Gameboard=(()=>{
         }
     }
 
+    const setFieldForAiLogic = (num, player) => {
+        if (player == undefined) {
+            _board[num] = undefined;
+            return;
+        }
+        _board[num] = player.getSign();
+    }
     const getEmptyFieldsIdx = () => {
         let fields = [];
         for (let i = 0; i < _board.length; i++) {
@@ -42,6 +49,7 @@ const Gameboard=(()=>{
         getEmptyFieldsIdx,
         getField,
         setField,
+        setFieldForAiLogic,
         clear
     };
 })();
@@ -201,7 +209,7 @@ const minimaxAiLogic = ((percentage) => {
         getAiPercentage,
         setAiPercentage
     }
-})(0);
+})(100);
 
 /**
  * This module is used to control the game
@@ -212,6 +220,7 @@ const gameController = (() => {
     const _humanPlayer = Player('X');
     const _secondPlayer = Player('O');
     let _activePlayer=_humanPlayer;
+    const _aiLogic=minimaxAiLogic;
 
     const getHumanPlayer = () => _humanPlayer;
     const getSecondPlayer = () => _secondPlayer;
@@ -399,11 +408,12 @@ const gameController = (() => {
         }
         console.log('deactivate');
         displayController.deactivate();
-        //displayController.makeBodyRestart();
+        displayController.makeBodyRestart();
     }
 
     const aiStep=() =>{
-
+        const num = _aiLogic.chooseField();
+        Gameboard.setField(num, _secondPlayer);
         if (checkForWin(Gameboard)) {
             (async () => {
                 await _sleep(500 + (Math.random() * 500));
@@ -432,11 +442,7 @@ const gameController = (() => {
         
         Gameboard.clear();
         displayController.clear();
-        if (_humanPlayer.getSign() == 'O') {
-            //aiStep();
-        }
         console.log('restart');
-        //console.log(minimaxAiLogic.getAiPercentage());
         displayController.deactivate();
 
         card.forEach(item =>{
