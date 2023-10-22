@@ -277,10 +277,6 @@ const gameController = (() => {
         else if (diagonal2.every(field => field == 'X') || diagonal2.every(field => field == 'O')){
             return true;
         }
-
-        else{
-            return false;
-        }
     }
 
 
@@ -288,9 +284,8 @@ const gameController = (() => {
         if (_checkForRows(board) || _checkForColumns(board) || _checkForDiagonals(board)) {
             return true;
         }
-        else{
-            return false;
-        }
+        return false;
+
     }
 
     const checkForDraw=(board)=>{
@@ -372,10 +367,11 @@ const gameController = (() => {
                 (async () => {
                     await _sleep(250 + (Math.random() * 300));
                     aiStep();
-                    if (!checkForWin(Gameboard)) {
-                        displayController.activate();
-                    }
+                    /*if (!checkForWin(Gameboard)) {
+                        displayController.deactivate();
+                    }*/
                 })();
+                displayController.activate();
             }
         }
     }
@@ -443,7 +439,7 @@ const gameController = (() => {
         Gameboard.clear();
         displayController.clear();
         console.log('restart');
-        displayController.deactivate();
+        displayController.activate();
 
         card.forEach(item =>{
             item.classList.remove('blur');
@@ -524,7 +520,6 @@ const displayController = (() => {
 
     const activate = () => {
         htmlBoard.forEach(field => {
-
             field.removeAttribute('disabled');
         });
     }
