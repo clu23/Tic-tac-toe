@@ -367,9 +367,6 @@ const gameController = (() => {
                 (async () => {
                     await _sleep(250 + (Math.random() * 300));
                     aiStep();
-                    /*if (!checkForWin(Gameboard)) {
-                        displayController.deactivate();
-                    }*/
                 })();
                 displayController.activate();
             }
@@ -428,7 +425,7 @@ const gameController = (() => {
 
         const card = document.querySelectorAll('#container, .header');
         const winElements = document.querySelectorAll('.win p');
-        const buttons=document.querySelectorAll('.item-player');
+        const buttons=document.querySelectorAll('.item-player, .game-sign, .sign-buttons, .x, .o');
         const gameModeSection=document.querySelectorAll('.game-mode, .mode-buttons, .pvsp, .pvsai');
         const paragraph=document.querySelector('p.game-mode');
 
@@ -488,7 +485,10 @@ const displayController = (() => {
 
     const _changePlayerSign = (sign) => {
         gameController.changeSign(sign);
-        document.querySelector('.item-player').classList.add('hide');
+        const signMode=document.querySelectorAll('.item-player, .game-sign, .sign-buttons, .x, .o');
+        signMode.forEach(element =>{
+            element.classList.add('hide');
+        });
         displayController.activate();
     }
 
@@ -498,10 +498,12 @@ const displayController = (() => {
         const paragraph=document.querySelector('p.game-mode');
         paragraph.textContent='';
         gameMode.forEach(element =>{
-            element.classList.add('hide')
+            element.classList.add('hide');
         });
-        const itemPlayer=document.querySelector('.item-player');
-        itemPlayer.classList.remove('hide');
+        const signMode=document.querySelectorAll('.item-player, .game-sign, .sign-buttons, .x, .o');
+        signMode.forEach(element =>{
+            element.classList.remove('hide');
+        });
     }
 
     const clear = () => {

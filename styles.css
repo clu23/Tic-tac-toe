@@ -1,9 +1,11 @@
+
+
 #container{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 50px;
+    justify-content: space-between;
+    gap: 20px;
     background-color: rgba(131, 163, 190, 0.589);
     height: 80%;
     width: 100%;
@@ -15,6 +17,7 @@
     height: 0px;
     width: 0px;
 }
+
 
 .header {
     background-color: rgb(47, 103, 75);
@@ -38,8 +41,8 @@
 }
 #container-grid{
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 0.9fr);
+    grid-template-rows: repeat(3, 0.9fr);
     width: 400px;
     height: 400px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -59,8 +62,19 @@ p.game-mode{
     font-weight: 200;
 }
 
+
+p.game-sign{
+    font-size: 18px;
+    font-family: 'Varela Round', sans-serif;
+    font-weight: 200;
+}
+
+
 .item-player {
     align-self: top;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .field { 
